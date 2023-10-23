@@ -9,7 +9,7 @@ Lottozahlen = np.arange(1, 46)
 anzahl_zahlen = {zahl: 0 for zahl in Lottozahlen}
 
 def ziehen(array):
-    i = 44
+    i = len(Lottozahlen)-1
     for a in range(6):
         #0 min, i max, 1 Anzahl
         z = np.random.randint(0, i, 1)
@@ -21,7 +21,7 @@ def ziehen(array):
         #Zahlen speichern
         ziehung = array[39:45]
 
-        print(array[39:45])
+    #print(array[39:45])
 
     for zahl in ziehung:
         #Dictionary anzahl_zahlen zählen wenn in ziehung vorhanden
@@ -40,11 +40,4 @@ plt.xlabel('Lottozahl')
 plt.ylabel('Häufigkeit')
 plt.title('Häufigkeit der Lottozahlen nach 1000 Ziehungen')
 plt.xticks(Lottozahlen)
-
 plt.show()
-
-
-
-# create_list():
-#   return [a for a in range(46)]
-#print(create_list())
