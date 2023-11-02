@@ -12,6 +12,8 @@ anz_straight = 0
 anz_royal_flush = 0
 anz_full_house = 0
 anz_straight_flush = 0
+
+
 def create_card_deck(count):
     cards_per_suit = count // 4
     card_deck = np.arange(1, count+1)
@@ -80,57 +82,60 @@ def flush(selected_cards, cards_per_suit):
     #     return True
     # return False
 
-def royal_flush(selected_cards, cards_per_suit):
-    if(flush(selected_cards, cards_per_suit)):
-        sorted_cards = sorted(selected_cards)
-        if(straight(selected_cards)):
-            if(sorted_cards[0] == cards_per_suit-4 or sorted_cards[0] == cards_per_suit*2-4 or sorted_cards[0] == cards_per_suit*3-4 or sorted_cards[0] == cards_per_suit*4-4):
-                # print("Royal Flush")
-                return True
+def royal_flush(selected_cards,cards_per_suit):
+    sorted_cards = sorted(selected_cards)
+    if(straight_flush(sorted_cards) and sorted_cards[4] % cards_per_suit == 0):
+        return True
     return False
 
-def straight(selected_cards):
-    sorted_cards = sorted(selected_cards)
+def straight(selected_cards, cards_per_suit):
+    # Sortiere die ausgewählten Karten
     # Extrahiere nur die Werte der Karten, um die Farbe zu ignorieren
-    values = [card % 13 for card in sorted_cards]
-    for i in range(len(values) - 1):
-        if values[i] + 1 != values[i + 1]:
-            if values[i] == 12 and values[i + 1] == 0:
-                continue  # Erlaubt den Übergang von König (Wert 12) zu Ass (Wert 0)
+    values = [card % cards_per_suit for card in selected_cards]
+    sorted_cards = sorted(values)
+    # Iteriere über die Werte und überprüfe, ob es sich um eine Straße handelt
+    for i in range(len(sorted_cards) - 1):
+        if sorted_cards[i] + 1 != sorted_cards[i + 1]:
             return False
     return True
 
-# def straight_flush(selected_cards, cards_per_suit):
-#     if straight(selected_cards) and flush(selected_cards, cards_per_suit):
-#         return True
-#     else:
-#         return False
+def straight_flush(selected_cards):
+    sorted_cards = sorted(selected_cards)
+    # Iteriere über die Werte und überprüfe, ob es sich um eine Straße handelt
+    for i in range(len(sorted_cards) - 1):
+        if sorted_cards[i] + 1 != sorted_cards[i + 1]:
+            return False
+    return True
 
 def full_house(selected_cards, cards_per_suit):
-    if three_of_a_kind(selected_cards, cards_per_suit) and paar(selected_cards, cards_per_suit):
-        return True
-    else:
-        return False
+    value = 0
+    if three_of_a_kind(selected_cards, cards_per_suit):
+        value +=1
+        if two_paare(selected_cards, cards_per_suit):
+            value +=1
+            if(value == 2):
+                return True
 
 games = 100000
 for i in range(games):
     card_deck, cards_per_suit = create_card_deck(52)
     on_hand = draw_five_cards(card_deck)
+    # on_hand = selected_cards = [26, 25, 24, 23, 22]
+    # on_hand = selected_cards = [1, 14, 27, 2, 15]
+
     if(royal_flush(on_hand,cards_per_suit)):
         anz_royal_flush+=1
-    # elif(straight_flush(on_hand,cards_per_suit)):
-    #     anz_straight_flush+=1
-
-    if(flush(on_hand, cards_per_suit)):
-        anz_flush+=1
-
-    if(straight(on_hand)):
-        anz_straight+=1
-    if (four_of_a_kind(on_hand, cards_per_suit)):
+    elif(straight_flush(on_hand)):
+        anz_straight_flush+=1
+    elif (four_of_a_kind(on_hand, cards_per_suit)):
         anz_vierling += 1
-    if(full_house(on_hand, cards_per_suit)):
+    elif(full_house(on_hand, cards_per_suit)):
         anz_full_house+=1
-    if(three_of_a_kind(on_hand, cards_per_suit)):
+    elif(flush(on_hand, cards_per_suit)):
+        anz_flush+=1
+    elif(straight(on_hand, cards_per_suit)):
+        anz_straight+=1
+    elif(three_of_a_kind(on_hand, cards_per_suit)):
         anz_drilling+=1
     elif(two_paare(on_hand, cards_per_suit)):
         anz_two_pair+=1
