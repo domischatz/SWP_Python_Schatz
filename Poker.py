@@ -84,7 +84,7 @@ def flush(selected_cards, cards_per_suit):
 
 def royal_flush(selected_cards,cards_per_suit):
     sorted_cards = sorted(selected_cards)
-    if(straight_flush(sorted_cards) and sorted_cards[4] % cards_per_suit == 0):
+    if straight_flush(sorted_cards) and (sorted_cards[4] % cards_per_suit == 0):
         return True
     return False
 
@@ -120,8 +120,8 @@ games = 100000
 for i in range(games):
     card_deck, cards_per_suit = create_card_deck(52)
     on_hand = draw_five_cards(card_deck)
-    # on_hand = selected_cards = [26, 25, 24, 23, 22]
-    # on_hand = selected_cards = [1, 14, 27, 2, 15]
+    # on_hand = selected_cards = [25, 26, 24, 23, 22]
+    # on_hand = selected_cards = [2, 1, 3, 4, 5]
 
     if(royal_flush(on_hand,cards_per_suit)):
         anz_royal_flush+=1
@@ -142,7 +142,7 @@ for i in range(games):
     elif(paar(on_hand, cards_per_suit)):
         anz_pair+= 1
 
-print("Royal Flush: {:.6f}%".format(anz_royal_flush / games * 100))
+print("Royal Flush:", anz_royal_flush / games * 100)
 print("Straight Flush:", anz_straight_flush/games*100)
 print("4-of-a-Kind:", anz_vierling / games * 100)
 print("Full House:", anz_full_house/games*100)
