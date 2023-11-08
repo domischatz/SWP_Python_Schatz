@@ -22,7 +22,7 @@ def create_card_deck(count):
 
 def draw_five_cards(card_deck):
     random.shuffle(card_deck)  # Das Deck mischen
-    selected_cards = card_deck[:5]
+    selected_cards = card_deck[:5] # ersten fünf Karten
     #print(selected_cards)
     return selected_cards
 
@@ -35,17 +35,20 @@ def paar(selected_cards, cards_per_suit):
                 return True
     #print("kein pairgezogen")
     return False
-def two_paare(selected_cards, cards_per_suit):
+def two_pairs(selected_cards, cards_per_suit):
+    # leeres Set, um gefundenen Paare zu speichern
     pairs = set()
     for i in range(len(selected_cards)):
         for j in range(i + 1, len(selected_cards)):
             if selected_cards[i] % cards_per_suit == selected_cards[j] % cards_per_suit:
+                # Fügt Paar zum Set hinzu
                 pairs.add(selected_cards[i] % cards_per_suit)
-
+    # Überprüfe ob 2 Paare gefunden
     if len(pairs) == 2:
         return True
     else:
         return False
+
 
 def three_of_a_kind(selected_cards, cards_per_suit):
     for i in range(len(selected_cards)):
@@ -67,8 +70,11 @@ def four_of_a_kind(selected_cards, cards_per_suit):
     #print("kein Drilling gezogen")
     return False
 def flush(selected_cards, cards_per_suit):
-    suits = [i // (cards_per_suit + 0.01) for i in selected_cards] #erstellen Liste die die Farben enthält
-    if all(suit == suits[0] for suit in suits): # überprüft, ob alle Elemente der Liste suits gleich sind
+    # Liste mit Farben ausgewählter Karten
+    suits = [i // (cards_per_suit + 0.01) for i in selected_cards]
+
+    #Überprüfe ob alle Elemente gleiche Farbe haben
+    if all(suit == suits[0] for suit in suits):
         # print("Flush gezogen")
         return True
     return False
@@ -83,17 +89,16 @@ def flush(selected_cards, cards_per_suit):
     # return False
 
 def royal_flush(selected_cards,cards_per_suit):
-    sorted_cards = sorted(selected_cards)
-    if straight_flush(sorted_cards) and (sorted_cards[4] % cards_per_suit == 0):
+    sorted_cards = sorted(selected_cards) #sortiert Karten aufsteigend
+    if straight_flush(sorted_cards) and (sorted_cards[4] % cards_per_suit == 0): # ob straight_flush und an letzer stelle eine Ass ist
         return True
     return False
 
 def straight(selected_cards, cards_per_suit):
-    # Sortiere die ausgewählten Karten
     # Extrahiere nur die Werte der Karten, um die Farbe zu ignorieren
     values = [card % cards_per_suit for card in selected_cards]
+    # Sortiere die ausgewählten Karten
     sorted_cards = sorted(values)
-    # Iteriere über die Werte und überprüfe, ob es sich um eine Straße handelt
     for i in range(len(sorted_cards) - 1):
         if sorted_cards[i] + 1 != sorted_cards[i + 1]:
             return False
@@ -101,7 +106,6 @@ def straight(selected_cards, cards_per_suit):
 
 def straight_flush(selected_cards):
     sorted_cards = sorted(selected_cards)
-    # Iteriere über die Werte und überprüfe, ob es sich um eine Straße handelt
     for i in range(len(sorted_cards) - 1):
         if sorted_cards[i] + 1 != sorted_cards[i + 1]:
             return False
@@ -111,7 +115,7 @@ def full_house(selected_cards, cards_per_suit):
     value = 0
     if three_of_a_kind(selected_cards, cards_per_suit):
         value +=1
-        if two_paare(selected_cards, cards_per_suit):
+        if two_pairs(selected_cards, cards_per_suit):
             value +=1
             if(value == 2):
                 return True
@@ -137,7 +141,7 @@ for i in range(games):
         anz_straight+=1
     elif(three_of_a_kind(on_hand, cards_per_suit)):
         anz_drilling+=1
-    elif(two_paare(on_hand, cards_per_suit)):
+    elif(two_pairs(on_hand, cards_per_suit)):
         anz_two_pair+=1
     elif(paar(on_hand, cards_per_suit)):
         anz_pair+= 1
