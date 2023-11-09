@@ -1,19 +1,5 @@
 import numpy as np
 import random
-
-anz_pair = 0
-anz_drilling = 0
-anz_vierling = 0
-anz_straight = 0
-anz_two_pair = 0
-anz_high_card = 0
-anz_flush = 0
-anz_straight = 0
-anz_royal_flush = 0
-anz_full_house = 0
-anz_straight_flush = 0
-
-
 def create_card_deck(count):
     cards_per_suit = count // 4
     card_deck = np.arange(1, count+1)
@@ -95,7 +81,7 @@ def royal_flush(selected_cards,cards_per_suit):
     return False
 
 def straight(selected_cards, cards_per_suit):
-    # Extrahiere nur die Werte der Karten, um die Farbe zu ignorieren
+    # nur die Werte der Karten, Farbe ignorieren
     values = [card % cards_per_suit for card in selected_cards]
     # Sortiere die ausgewählten Karten
     sorted_cards = sorted(values)
@@ -119,43 +105,55 @@ def full_house(selected_cards, cards_per_suit):
             value +=1
             if(value == 2):
                 return True
+def statistic():
+    anz_pair = 0
+    anz_drilling = 0
+    anz_vierling = 0
+    anz_straight = 0
+    anz_two_pair = 0
+    anz_high_card = 0
+    anz_flush = 0
+    anz_straight = 0
+    anz_royal_flush = 0
+    anz_full_house = 0
+    anz_straight_flush = 0
 
-games = 100000
-for i in range(games):
-    card_deck, cards_per_suit = create_card_deck(52)
-    on_hand = draw_five_cards(card_deck)
-    # on_hand = selected_cards = [25, 26, 24, 23, 22]
-    # on_hand = selected_cards = [2, 1, 3, 4, 5]
+    games = 100000
 
-    if(royal_flush(on_hand,cards_per_suit)):
-        anz_royal_flush+=1
-    elif(straight_flush(on_hand)):
-        anz_straight_flush+=1
-    elif (four_of_a_kind(on_hand, cards_per_suit)):
-        anz_vierling += 1
-    elif(full_house(on_hand, cards_per_suit)):
-        anz_full_house+=1
-    elif(flush(on_hand, cards_per_suit)):
-        anz_flush+=1
-    elif(straight(on_hand, cards_per_suit)):
-        anz_straight+=1
-    elif(three_of_a_kind(on_hand, cards_per_suit)):
-        anz_drilling+=1
-    elif(two_pairs(on_hand, cards_per_suit)):
-        anz_two_pair+=1
-    elif(paar(on_hand, cards_per_suit)):
-        anz_pair+= 1
+    for i in range(games):
+        card_deck, cards_per_suit = create_card_deck(52)
+        on_hand = draw_five_cards(card_deck)
+        # on_hand = selected_cards = [25, 26, 24, 23, 22]
+        # on_hand = selected_cards = [2, 1, 3, 4, 5]
 
-print("Royal Flush:", anz_royal_flush / games * 100)
-print("Straight Flush:", anz_straight_flush/games*100)
-print("4-of-a-Kind:", anz_vierling / games * 100)
-print("Full House:", anz_full_house/games*100)
-print("Flush:", anz_flush/games*100)
-print("Straight:", anz_straight/games*100)
-print("3-of-a-Kind:", anz_drilling/games*100)
-print("Two Pair:", anz_two_pair/games*100)
-print("One Pair:", anz_pair/games*100)
+        if(royal_flush(on_hand,cards_per_suit)):
+            anz_royal_flush+=1
+        elif(straight_flush(on_hand)):
+            anz_straight_flush+=1
+        elif (four_of_a_kind(on_hand, cards_per_suit)):
+            anz_vierling += 1
+        elif(full_house(on_hand, cards_per_suit)):
+            anz_full_house+=1
+        elif(flush(on_hand, cards_per_suit)):
+            anz_flush+=1
+        elif(straight(on_hand, cards_per_suit)):
+            anz_straight+=1
+        elif(three_of_a_kind(on_hand, cards_per_suit)):
+            anz_drilling+=1
+        elif(two_pairs(on_hand, cards_per_suit)):
+            anz_two_pair+=1
+        elif(paar(on_hand, cards_per_suit)):
+            anz_pair+= 1
 
+    print("Royal Flush:", anz_royal_flush / games * 100)
+    print("Straight Flush:", anz_straight_flush/games*100)
+    print("4-of-a-Kind:", anz_vierling / games * 100)
+    print("Full House:", anz_full_house/games*100)
+    print("Flush:", anz_flush/games*100)
+    print("Straight:", anz_straight/games*100)
+    print("3-of-a-Kind:", anz_drilling/games*100)
+    print("Two Pair:", anz_two_pair/games*100)
+    print("One Pair:", anz_pair/games*100)
 
-
+statistic()
 
