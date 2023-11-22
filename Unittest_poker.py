@@ -31,7 +31,7 @@ class TestCardFunctions(unittest.TestCase):
         self.assertTrue(flush(selected_cards, cards_per_suit))
 
         # Test case 2: Test when there is no flush in the selected cards
-        selected_cards = [1, 2, 3, 4, 13]
+        selected_cards = [1, 14, 51, 4, 13]
         cards_per_suit = 13
         self.assertFalse(flush(selected_cards, cards_per_suit))
 
