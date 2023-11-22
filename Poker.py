@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 import random
 def create_card_deck(count):
@@ -35,7 +37,6 @@ def two_pairs(selected_cards, cards_per_suit):
     else:
         return False
 
-
 def three_of_a_kind(selected_cards, cards_per_suit):
     for i in range(len(selected_cards)):
         for j in range(i + 1, len(selected_cards)):
@@ -51,7 +52,8 @@ def four_of_a_kind(selected_cards, cards_per_suit):
         for j in range(i + 1, len(selected_cards)):
             for x in range(j + 1, len(selected_cards)):
                 for z in range(x + 1, len(selected_cards)):
-                    if selected_cards[i] % cards_per_suit == selected_cards[j] % cards_per_suit == selected_cards[x] % cards_per_suit == selected_cards[z] % cards_per_suit:
+                    if (selected_cards[i] % cards_per_suit == selected_cards[j] % cards_per_suit ==
+                            selected_cards[x] % cards_per_suit == selected_cards[z] % cards_per_suit):
                         return True
     #print("kein Drilling gezogen")
     return False
@@ -106,22 +108,21 @@ def full_house(selected_cards, cards_per_suit):
             if(value == 2):
                 return True
 def statistic():
+    cards = 52
+    games = int(sys.argv[1])
+    #games = 100000
     anz_pair = 0
     anz_drilling = 0
     anz_vierling = 0
-    anz_straight = 0
     anz_two_pair = 0
-    anz_high_card = 0
     anz_flush = 0
     anz_straight = 0
     anz_royal_flush = 0
     anz_full_house = 0
     anz_straight_flush = 0
 
-    games = 100000
-
     for i in range(games):
-        card_deck, cards_per_suit = create_card_deck(52)
+        card_deck, cards_per_suit = create_card_deck(cards)
         on_hand = draw_five_cards(card_deck)
         # on_hand = selected_cards = [25, 26, 24, 23, 22]
         # on_hand = selected_cards = [2, 1, 3, 4, 5]
@@ -155,5 +156,4 @@ def statistic():
     print("Two Pair:", anz_two_pair/games*100)
     print("One Pair:", anz_pair/games*100)
 
-statistic()
 
