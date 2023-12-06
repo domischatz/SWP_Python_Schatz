@@ -1,7 +1,7 @@
 import sys
-
 import numpy as np
 import random
+
 def create_card_deck(count):
     cards_per_suit = count // 4
     card_deck = np.arange(1, count+1)
