@@ -1,0 +1,17 @@
+Erweiterung KW08 2024:
+======================
+- gesammelte Daten der von den Spielern gewählte Symbolanzahl zu einem Webserver übertragen und in eine SQLite DB speichern
+
+senden:
+import requests
+
+url = 'http://url.com'
+query = {'field': value}
+res = requests.post(url, data=query)
+print(res.text)
+
+empfangen:
+https://sentry.io/answers/flask-getting-post-data/
+
+sqlite:
+https://www.ionos.at/digitalguide/websites/web-entwicklung/sqlite3-python/

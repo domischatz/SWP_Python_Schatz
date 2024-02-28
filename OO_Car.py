@@ -11,3 +11,4 @@ car2 = Car(color="red", mileage=30_000)
 
 print(car1)
 print(car2)
+
